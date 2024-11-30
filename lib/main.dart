@@ -36,8 +36,8 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       body: <Widget>[
         const HomePage(),
-        const Placeholder(), // DataScreen will go here
-        const Placeholder(), // ContactScreen will go here
+        const DataPage(),
+        const ContactPage(),
       ][currentPageIndex],
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {

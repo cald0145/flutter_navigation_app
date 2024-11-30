@@ -37,10 +37,10 @@ class _DataPageState extends State<DataPage> {
         if (detailResponse.statusCode == 200) {
           final details = json.decode(detailResponse.body);
           pokemonDetails.add({
-            'Name': details['name'],
-            'Height': details['height'],
-            'Weight': details['weight'],
-            'Type': details['types'][0]['type']['name'],
+            'name': details['name'],
+            'height': details['height'],
+            'weight': details['weight'],
+            'type': details['types'][0]['type']['name'],
           });
         }
       }
