@@ -13,9 +13,109 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.light(useMaterial3: true),
-      darkTheme: ThemeData.dark(useMaterial3: true),
-      themeMode: ThemeMode.dark,
+      theme: ThemeData(
+        useMaterial3: true,
+        // custom color scheme
+        colorScheme: const ColorScheme(
+          brightness: Brightness.light,
+            primary: Color(0xFF004D40), // dark green
+            onPrimary: Colors.white,
+            secondary: Color(0xFF626058), // greyish color
+          onSecondary: Colors.white,
+          error: Color(0xFFB00020),
+          onError: Colors.white,
+          surface: Color(0xFFFFFFFF),
+          onSurface: Colors.black,
+        ),
+        // custom text theme
+        textTheme: const TextTheme(
+          displayLarge: TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+            letterSpacing: -1.0,
+          ),
+          displayMedium: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            letterSpacing: -0.5,
+          ),
+          titleLarge: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0.0,
+          ),
+          titleMedium: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            letterSpacing: 0.15,
+          ),
+          bodyLarge: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            letterSpacing: 0.5,
+          ),
+          bodyMedium: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            letterSpacing: 0.25,
+          ),
+        ),
+      ),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        // dark theme color scheme
+        colorScheme: const ColorScheme(
+          brightness: Brightness.dark,
+          primary: Color(0xFF69F0AE), // light green
+          onPrimary: Colors.black,
+            secondary: Color(0xFF004D40), // dark green
+          onSecondary: Colors.black,
+          error: Color(0xFFB00020),
+          onError: Colors.black,
+          surface: Color(0xFF1E1E1E),
+          onSurface: Colors.white,
+        ),
+        // inheriting the same text theme with adjusted colors for dark mode
+        textTheme: const TextTheme(
+          displayLarge: TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+            letterSpacing: -1.0,
+            color: Colors.white,
+          ),
+          displayMedium: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            letterSpacing: -0.5,
+            color: Colors.white,
+          ),
+          titleLarge: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0.0,
+            color: Colors.white,
+          ),
+          titleMedium: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            letterSpacing: 0.15,
+            color: Colors.white,
+          ),
+          bodyLarge: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            letterSpacing: 0.5,
+            color: Colors.white,
+          ),
+          bodyMedium: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            letterSpacing: 0.25,
+            color: Colors.white,
+          ),
+        ),
+      ),
+      themeMode: ThemeMode.system, //system decide between light and dark
       home: const MainScreen(),
     );
   }

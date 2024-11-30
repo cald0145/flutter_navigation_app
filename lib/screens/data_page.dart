@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../models/pokemon.dart';
 
 class DataPage extends StatefulWidget {
   const DataPage({super.key});
@@ -11,7 +12,7 @@ class DataPage extends StatefulWidget {
 
 class _DataPageState extends State<DataPage> {
   // future to store api call
-  late Future<List<Map<String, dynamic>>> _pokemonFuture;
+  late Future<List<Pokemon>> _pokemonFuture;
 
   @override
   void initState() {
@@ -20,7 +21,7 @@ class _DataPageState extends State<DataPage> {
   }
 
   // fetch pokemon data from api
-  Future<List<Map<String, dynamic>>> fetchPokemon() async {
+  Future<List<Pokemon>> fetchPokemon() async {
     final response = await http.get(
       Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=15'),
     );
@@ -29,19 +30,18 @@ class _DataPageState extends State<DataPage> {
       final Map<String, dynamic> data = json.decode(response.body);
       final List<dynamic> results = data['results'];
 
-      // fetch detail for each pokemon
-      List<Map<String, dynamic>> pokemonDetails = [];
+      List<Pokemon> pokemonDetails = [];
 
       for (var pokemon in results) {
         final detailResponse = await http.get(Uri.parse(pokemon['url']));
         if (detailResponse.statusCode == 200) {
           final details = json.decode(detailResponse.body);
-          pokemonDetails.add({
+          pokemonDetails.add(Pokemon.fromJson({
             'name': details['name'],
             'height': details['height'],
             'weight': details['weight'],
             'type': details['types'][0]['type']['name'],
-          });
+          }));
         }
       }
 
@@ -57,7 +57,7 @@ class _DataPageState extends State<DataPage> {
       appBar: AppBar(
         title: const Text('Pokemon Data'),
       ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
+      body: FutureBuilder<List<Pokemon>>(
         future: _pokemonFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -86,16 +86,16 @@ class _DataPageState extends State<DataPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        pokemon['name'].toString().toUpperCase(),
+                        pokemon.name.toUpperCase(),
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Type: ${pokemon['type']}',
+                        'Type: ${pokemon.type}',
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       Text(
-                        'Height: ${pokemon['height']}',
+                        'Height: ${pokemon.height}',
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],
